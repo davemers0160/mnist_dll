@@ -11,8 +11,8 @@
 #include "dlib/dnn.h"
 #include "dlib/dnn/core.h"
 
-#include "dlib_elu.h"
-#include "dlib_srelu.h"
+//#include "dlib_elu.h"
+//#include "dlib_srelu.h"
 
 extern const std::string version = "pso_14_59";
 //-----------------------------------------------------------------
