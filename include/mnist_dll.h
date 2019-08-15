@@ -10,11 +10,11 @@
 #endif
 
 // This function will initialize the network and load the required weights
-extern "C" MNIST_DLL_API void init_net(std::string net_name);
+extern "C" MNIST_DLL_API void init_net(const char *net_name);
 
 // This function will take an grayscale image in std::vector<uint8_t> row major order
 // as an input and produce a resulting classification of the image.  The input must be 28*28
-extern "C" MNIST_DLL_API uint64_t run_net(std::vector<uint8_t> &input);
+extern "C" MNIST_DLL_API uint64_t run_net(uint8_t input[], uint32_t nr, uint32_t nc);
 
 // This function will output a vector of the output layer for the final
 // classification layer

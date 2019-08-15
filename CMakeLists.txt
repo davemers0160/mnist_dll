@@ -34,9 +34,10 @@ if(BUILD_DLL)
     set(CMAKE_CXX_STANDARD 11)
     
     # get the source files for the DLL
-    file(GLOB SOURCES "src/*.cpp")
+    file(GLOB SOURCES "src/*.cpp"
+            "D:/dlib-19.17/dlib/all/*.cpp")
     
-    set(project_includes "include" "${COMMON_ROOT}/include")
+    set(project_includes "include" "${COMMON_ROOT}/include" "D:/dlib-19.17/")
 
     message(" ")
     message("--------------------------------------------------------")
@@ -65,6 +66,13 @@ if(BUILD_DLL)
         EXPORT_FILE_NAME mnist_dll_Export.h
         STATIC_DEFINE PROJECT_NAME_BUILT_AS_STATIC)
     
+    message("MSVC Version: " ${MSVC_VERSION})
+    # uncomment for MSVC and cmake greater than 3.6.0
+    set(default_build_type "Release")
+    if(MSVC AND (${CMAKE_VERSION} VERSION_GREATER "3.6.0"))
+        target_compile_options(${PROJECT_NAME} PUBLIC "/MP" "/bigobj")
+        set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+    endif()
     
 else()
     message("Building Project ...")
