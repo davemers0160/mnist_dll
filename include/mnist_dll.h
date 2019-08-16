@@ -9,6 +9,19 @@
 #define MNIST_DLL_API __declspec(dllimport)
 #endif
 
+
+struct layer_struct
+{
+    uint64_t k;
+    uint64_t n;
+    uint64_t nr;
+    uint64_t nc;
+    uint64_t size;
+    const float *params;
+};
+
+
+
 // This function will initialize the network and load the required weights
 extern "C" MNIST_DLL_API void init_net(const char *net_name);
 
@@ -21,5 +34,7 @@ extern "C" MNIST_DLL_API uint64_t run_net(uint8_t input[], uint32_t nr, uint32_t
 //extern "C" MNIST_DLL_API std::vector<float> get_layer1(void);
 extern "C" MNIST_DLL_API const float* get_layer1(void);
 
+//extern "C" MNIST_DLL_API const float* get_layer12(void);
+extern "C" MNIST_DLL_API void get_layer12(struct layer_struct &data);
 
 #endif  // MNIST_DLL_H

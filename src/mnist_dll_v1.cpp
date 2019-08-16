@@ -41,8 +41,23 @@ uint64_t run_net(uint8_t input[], uint32_t nr, uint32_t nc)
 //std::vector<float> get_layer1(void)
 const float* get_layer1(void)
 {
-    auto& lo5 = dlib::layer<1>(net).get_output();
-    const float* fc10 = lo5.host();
+    auto& lo = dlib::layer<1>(net).get_output();
+    const float* params = lo.host();
     //std::vector<float> pd(fc10, fc10 + lo5.k());
-    return fc10;
+    return params;
 }
+
+//----------------------------------------------------------------------------------
+//const float* get_layer12(void)
+void get_layer12(struct layer_struct &data)
+{
+    auto& lo = dlib::layer<12>(net).get_output();
+
+    data.k = lo.k();
+    data.n = lo.num_samples();
+    data.nr = lo.nr();
+    data.nc = lo.nc();
+    data.size = lo.size();
+    data.params = lo.host();
+}
+
