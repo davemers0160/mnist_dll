@@ -48,8 +48,8 @@ const float* get_layer1(void)
 }
 
 //----------------------------------------------------------------------------------
-//const float* get_layer12(void)
-void get_layer12(struct layer_struct &data)
+//void get_layer12(struct layer_struct &data, )
+void get_layer12(struct layer_struct &data, const float* &data_params)
 {
     auto& lo = dlib::layer<12>(net).get_output();
 
@@ -58,6 +58,8 @@ void get_layer12(struct layer_struct &data)
     data.nr = lo.nr();
     data.nc = lo.nc();
     data.size = lo.size();
-    data.params = lo.host();
+    //data.params = lo.host();
+    data_params = lo.host();
+
 }
 

@@ -35,6 +35,6 @@ extern "C" MNIST_DLL_API uint64_t run_net(uint8_t input[], uint32_t nr, uint32_t
 extern "C" MNIST_DLL_API const float* get_layer1(void);
 
 //extern "C" MNIST_DLL_API const float* get_layer12(void);
-extern "C" MNIST_DLL_API void get_layer12(struct layer_struct &data);
+extern "C" MNIST_DLL_API void get_layer12(struct layer_struct &data, const float* &data_params);
 
 #endif  // MNIST_DLL_H
