@@ -38,28 +38,75 @@ uint64_t run_net(uint8_t input[], uint32_t nr, uint32_t nc)
 }
 
 //----------------------------------------------------------------------------------
-//std::vector<float> get_layer1(void)
-const float* get_layer1(void)
+void get_layer_01(struct layer_struct &data, const float* &data_params)
 {
     auto& lo = dlib::layer<1>(net).get_output();
-    const float* params = lo.host();
-    //std::vector<float> pd(fc10, fc10 + lo5.k());
-    return params;
-}
-
-//----------------------------------------------------------------------------------
-//void get_layer12(struct layer_struct &data, )
-void get_layer12(struct layer_struct &data, const float* &data_params)
-{
-    auto& lo = dlib::layer<12>(net).get_output();
-
     data.k = lo.k();
     data.n = lo.num_samples();
     data.nr = lo.nr();
     data.nc = lo.nc();
     data.size = lo.size();
-    //data.params = lo.host();
     data_params = lo.host();
+}
 
+//----------------------------------------------------------------------------------
+void get_layer_02(struct layer_struct &data, const float* &data_params)
+{
+    auto& lo = dlib::layer<2>(net).get_output();
+    data.k = lo.k();
+    data.n = lo.num_samples();
+    data.nr = lo.nr();
+    data.nc = lo.nc();
+    data.size = lo.size();
+    data_params = lo.host();
+}
+
+//----------------------------------------------------------------------------------
+void get_layer_05(struct layer_struct &data, const float* &data_params)
+{
+    auto& lo = dlib::layer<5>(net).get_output();
+    data.k = lo.k();
+    data.n = lo.num_samples();
+    data.nr = lo.nr();
+    data.nc = lo.nc();
+    data.size = lo.size();
+    data_params = lo.host();
+}
+
+//----------------------------------------------------------------------------------
+void get_layer_08(struct layer_struct &data, const float* &data_params)
+{
+    auto& lo = dlib::layer<8>(net).get_output();
+    data.k = lo.k();
+    data.n = lo.num_samples();
+    data.nr = lo.nr();
+    data.nc = lo.nc();
+    data.size = lo.size();
+    data_params = lo.host();
+}
+
+//----------------------------------------------------------------------------------
+void get_layer_09(struct layer_struct &data, const float* &data_params)
+{
+    auto& lo = dlib::layer<9>(net).get_output();
+    data.k = lo.k();
+    data.n = lo.num_samples();
+    data.nr = lo.nr();
+    data.nc = lo.nc();
+    data.size = lo.size();
+    data_params = lo.host();
+}
+
+//----------------------------------------------------------------------------------
+//void get_layer12(struct layer_struct &data, )
+void get_layer_12(struct layer_struct &data, const float* &data_params)
+{
+    auto& lo = dlib::layer<12>(net).get_output();
+    data.k = lo.k();
+    data.n = lo.num_samples();
+    data.nr = lo.nr();
+    data.nc = lo.nc();
+    data.size = lo.size();
+    data_params = lo.host();
 }
 
