@@ -35,7 +35,7 @@ extern "C" {
 #endif
 // This function will take an grayscale image in std::vector<uint8_t> row major order
 // as an input and produce a resulting classification of the image.  The input must be 28*28
-MNIST_DLL_API unsigned int run_net(unsigned char input[], unsigned int nr, unsigned int nc);
+MNIST_DLL_API unsigned int run_net(unsigned char* input, unsigned int nr, unsigned int nc);
 #ifdef __cplusplus
 }
 #endif
