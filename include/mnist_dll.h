@@ -43,9 +43,9 @@ MNIST_DLL_API unsigned int run_net(unsigned char input[], unsigned int nr, unsig
 #ifdef __cplusplus
 extern "C" {
 #endif
-// This function will output a vector of the output layer for the final classification layer
-//MNIST_DLL_API void get_layer_01(struct layer_struct &data, const float* &data_params);
-MNIST_DLL_API void get_layer_01(struct layer_struct *data, const float* data_params[]);
+    // This function will output a vector of the output layer for the final classification layer
+    //MNIST_DLL_API void get_layer_01(struct layer_struct &data, const float* &data_params);
+    MNIST_DLL_API void get_layer_01(struct layer_struct *data, const float **data_params);
 #ifdef __cplusplus
 }
 #endif
@@ -54,7 +54,7 @@ MNIST_DLL_API void get_layer_01(struct layer_struct *data, const float* data_par
 extern "C" {
 #endif
     //MNIST_DLL_API void get_layer_02(struct layer_struct &data, const float* &data_params);
-    MNIST_DLL_API void get_layer_02(struct layer_struct *data, const float* data_params[]);
+    MNIST_DLL_API void get_layer_02(struct layer_struct *data, const float **data_params);
 #ifdef __cplusplus
 }
 #endif
@@ -63,7 +63,7 @@ extern "C" {
 extern "C" {
 #endif
     //MNIST_DLL_API void get_layer_05(struct layer_struct &data, const float* &data_params);
-    MNIST_DLL_API void get_layer_05(struct layer_struct *data, const float* data_params[]);
+    MNIST_DLL_API void get_layer_05(struct layer_struct *data, const float **data_params);
 #ifdef __cplusplus
 }
 #endif
@@ -72,7 +72,7 @@ extern "C" {
 extern "C" {
 #endif
     //MNIST_DLL_API void get_layer_08(struct layer_struct &data, const float* &data_params);
-    MNIST_DLL_API void get_layer_08(struct layer_struct *data, const float* data_params[]);
+    MNIST_DLL_API void get_layer_08(struct layer_struct *data, const float **data_params);
 #ifdef __cplusplus
 }
 #endif
@@ -81,7 +81,7 @@ extern "C" {
 extern "C" {
 #endif
     //MNIST_DLL_API void get_layer_09(struct layer_struct &data, const float* &data_params);
-    MNIST_DLL_API void get_layer_09(struct layer_struct *data, const float* data_params[]);
+    MNIST_DLL_API void get_layer_09(struct layer_struct *data, const float **data_params);
 #ifdef __cplusplus
 }
 #endif
@@ -90,7 +90,7 @@ extern "C" {
 extern "C" {
 #endif
     //MNIST_DLL_API void get_layer_12(struct layer_struct &data, const float* &data_params);
-    MNIST_DLL_API void get_layer_12(struct layer_struct *data, const float* data_params[]);
+    MNIST_DLL_API void get_layer_12(struct layer_struct *data, const float **data_params);
 #ifdef __cplusplus
 }
 #endif
