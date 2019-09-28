@@ -38,7 +38,7 @@ unsigned int run_net(unsigned char* input, unsigned int nr, unsigned int nc)
 }
 
 //----------------------------------------------------------------------------------
-void get_layer_01(struct layer_struct *data, const float* data_params[])
+void get_layer_01(struct layer_struct *data, const float **data_params)
 {
     auto& lo = dlib::layer<1>(net).get_output();
     data->k = lo.k();
@@ -50,7 +50,7 @@ void get_layer_01(struct layer_struct *data, const float* data_params[])
 }
 
 //----------------------------------------------------------------------------------
-void get_layer_02(struct layer_struct *data, const float* data_params[])
+void get_layer_02(struct layer_struct *data, const float **data_params)
 {
     auto& lo = dlib::layer<2>(net).get_output();
     data->k = lo.k();
@@ -62,7 +62,7 @@ void get_layer_02(struct layer_struct *data, const float* data_params[])
 }
 
 //----------------------------------------------------------------------------------
-void get_layer_05(struct layer_struct *data, const float* data_params[])
+void get_layer_05(struct layer_struct *data, const float **data_params)
 {
     auto& lo = dlib::layer<5>(net).get_output();
     data->k = lo.k();
@@ -74,7 +74,7 @@ void get_layer_05(struct layer_struct *data, const float* data_params[])
 }
 
 //----------------------------------------------------------------------------------
-void get_layer_08(struct layer_struct *data, const float* data_params[])
+void get_layer_08(struct layer_struct *data, const float **data_params)
 {
     auto& lo = dlib::layer<8>(net).get_output();
     data->k = lo.k();
@@ -86,7 +86,7 @@ void get_layer_08(struct layer_struct *data, const float* data_params[])
 }
 
 //----------------------------------------------------------------------------------
-void get_layer_09(struct layer_struct *data, const float* data_params[])
+void get_layer_09(struct layer_struct *data, const float **data_params)
 {
     auto& lo = dlib::layer<9>(net).get_output();
     data->k = lo.k();
@@ -99,7 +99,7 @@ void get_layer_09(struct layer_struct *data, const float* data_params[])
 
 //----------------------------------------------------------------------------------
 //void get_layer12(struct layer_struct &data, )
-void get_layer_12(struct layer_struct *data, const float* data_params[])
+void get_layer_12(struct layer_struct *data, const float **data_params)
 {
     auto& lo = dlib::layer<12>(net).get_output();
     data->k = lo.k();
