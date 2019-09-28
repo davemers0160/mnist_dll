@@ -35,7 +35,8 @@ if(BUILD_DLL)
     
     # get the source files for the DLL
     file(GLOB SOURCES "src/*.cpp"
-            "D:/dlib-19.17/dlib/all/*.cpp")
+            "D:/dlib-19.17/dlib/all/*.cpp"
+			)
     
     set(project_includes "include" "${COMMON_ROOT}/include" "D:/dlib-19.17/")
 
