@@ -16,29 +16,37 @@
 # linux: cmake --build . --config Release -- -j4
 #
 
-
 cmake_minimum_required(VERSION 3.9)
 
-PROJECT(MNIST_DLL)
+PROJECT(mnist_lib)
 
-set(BUILD_DLL TRUE)
+#set(BUILD_DLL TRUE)
 
-if(BUILD_DLL)
+#if(BUILD_DLL)
+
+    set(LIB_NAME "mnist_lib")
+
+    # Change these to point to the right location for a particular machine
+    set(DLIB_ROOT "D:/dlib-19.17/")
+    set(COMMON_ROOT "D:/Common")
+
 
     message("Building DLL ...")
-
-    include(D:/dlib-19.17/dlib/cmake)
-    set(COMMON_ROOT "D:/Common")
+    
+    include(${DLIB_ROOT}/dlib/cmake)
 
     include (GenerateExportHeader)
     set(CMAKE_CXX_STANDARD 11)
     
     # get the source files for the DLL
     file(GLOB SOURCES "src/*.cpp"
-            "D:/dlib-19.17/dlib/all/*.cpp"
+            "${DLIB_ROOT}/dlib/all/*.cpp"
 			)
     
-    set(project_includes "include" "${COMMON_ROOT}/include" "D:/dlib-19.17/")
+    set(project_includes "include" 
+                        "${COMMON_ROOT}/include" 
+                        ${DLIB_ROOT}
+                        )
 
     message(" ")
     message("--------------------------------------------------------")
@@ -59,95 +67,83 @@ if(BUILD_DLL)
     message(" ")
     
     include_directories(${project_includes})
-    add_library(MNIST_DLL SHARED ${SOURCES})
+    add_library(${LIB_NAME} SHARED ${SOURCES})
 
     GENERATE_EXPORT_HEADER(${PROJECT_NAME}
         BASE_NAME ${PROJECT_NAME}
         EXPORT_MACRO_NAME ${PROJECT_NAME_EXPORT}
-        EXPORT_FILE_NAME mnist_dll_Export.h
+        EXPORT_FILE_NAME ${LIB_NAME}_Export.h
         STATIC_DEFINE PROJECT_NAME_BUILT_AS_STATIC)
     
-    message("MSVC Version: " ${MSVC_VERSION})
-    # uncomment for MSVC and cmake greater than 3.6.0
     set(default_build_type "Release")
     if(MSVC AND (${CMAKE_VERSION} VERSION_GREATER "3.6.0"))
+        message("MSVC Version: " ${MSVC_VERSION})
         target_compile_options(${PROJECT_NAME} PUBLIC "/MP" "/bigobj")
         set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
     endif()
     
-else()
-    message("Building Project ...")
-    set(exe_name "dnn_mnist")
+#else()
+    # message("Building Project ...")
+    # set(exe_name "dnn_mnist")
 
 
-    set(PLATFORM "$ENV{PLATFORM}" CACHE INTERNAL "Copied from environment variable")
-    message("Platform: " ${PLATFORM})
+    # set(PLATFORM "$ENV{PLATFORM}" CACHE INTERNAL "Copied from environment variable")
+    # message("Platform: " ${PLATFORM})
 
-    if(WIN32)
-        include(D:/dlib/dlib/cmake)
-        set(COMMON_ROOT "D:/Common")
-    else()
-        if(${PLATFORM} STREQUAL "HPC")
-            include(~/dlib/dlib/cmake)
-            set(COMMON_ROOT "~/Common")
-        else()
-            include(~/dlib/dlib/cmake)
-            set(COMMON_ROOT "~/Common")
-        endif()
-    endif()
+    # if(WIN32)
+        # include(D:/dlib/dlib/cmake)
+        # set(COMMON_ROOT "D:/Common")
+    # else()
+        # if(${PLATFORM} STREQUAL "HPC")
+            # include(~/dlib/dlib/cmake)
+            # set(COMMON_ROOT "~/Common")
+        # else()
+            # include(~/dlib/dlib/cmake)
+            # set(COMMON_ROOT "~/Common")
+        # endif()
+    # endif()
 
     # include(${COMMON_ROOT}/cmake_utils/use_cpp_11.cmake)
     # include(${COMMON_ROOT}/cmake_utils/use_sse_avx.cmake)
 
-    file(GLOB SOURCES "src/*.cpp")
+    # file(GLOB SOURCES "src/*.cpp")
 
-    set(project_includes "include" "${COMMON_ROOT}/include")
+    # set(project_includes "include" "${COMMON_ROOT}/include")
+   
+    # message(" ")
+    # message("--------------------------------------------------------")
+    # message("Source Files: ")
+    # foreach(S ${SOURCES})
+        # message("  " ${S})
+    # endforeach()
+    # message("--------------------------------------------------------")
+    # message(" ")
 
-    # find OpenCV
-    find_package(OpenCV REQUIRED)
-    if (OpenCV_FOUND)
-        set(project_includes ${project_includes} ${OpenCV_INCLUDE_DIRS})
-
-    else()
-        message("OpenCV not found, so we won't build the project.")
-    endif()
-    
-    
-    message(" ")
-    message("--------------------------------------------------------")
-    message("Source Files: ")
-    foreach(S ${SOURCES})
-        message("  " ${S})
-    endforeach()
-    message("--------------------------------------------------------")
-    message(" ")
-
-    message(" ")
-    message("--------------------------------------------------------")
-    message("Project Includes: ")
-    foreach(S ${project_includes})
-        message("  " ${S})
-    endforeach()
-    message("--------------------------------------------------------")
-    message(" ")
+    # message(" ")
+    # message("--------------------------------------------------------")
+    # message("Project Includes: ")
+    # foreach(S ${project_includes})
+        # message("  " ${S})
+    # endforeach()
+    # message("--------------------------------------------------------")
+    # message(" ")
 
 
-    include_directories(${project_includes})
-    add_executable(${exe_name} ${SOURCES})
-    target_link_libraries(${exe_name} dlib::dlib ${OpenCV_LIBS})
+    # include_directories(${project_includes})
+    # add_executable(${exe_name} ${SOURCES})
+    # target_link_libraries(${exe_name} dlib::dlib ${OpenCV_LIBS})
 
-    if(WIN32)
-        message("MSVC Version: " ${MSVC_VERSION})
-        # uncomment for MSVC and cmake greater than 3.6.0
-        set(default_build_type "Release")
-        if(MSVC AND (${CMAKE_VERSION} VERSION_GREATER "3.6.0"))
-            target_compile_options(${exe_name} PRIVATE "/MP")
-            set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${exe_name})
-        endif()
+    # if(WIN32)
+        # message("MSVC Version: " ${MSVC_VERSION})
+        # set(default_build_type "Release")
+        # if(MSVC AND (${CMAKE_VERSION} VERSION_GREATER "3.6.0"))
+            # target_compile_options(${exe_name} PRIVATE "/MP")
+            # set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${exe_name})
+        # endif()
 
-    endif()
+    # endif()
 
-endif()
+# endif()
 
 
 message(" ")
