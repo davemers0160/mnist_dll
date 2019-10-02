@@ -6,11 +6,22 @@
 //#include <string>
 //#include <vector>
 
+#if defined(_WIN32) | defined(__WIN32__) | defined(__WIN32) | defined(_WIN64) | defined(__WIN64)
 #ifdef MNIST_DLL_EXPORTS
 #define MNIST_DLL_API __declspec(dllexport)
 #else
 #define MNIST_DLL_API __declspec(dllimport)
 #endif
+
+#else
+#define MNIST_DLL_API
+//#ifdef MNIST_DLL_API
+//#undef MNIST_DLL_API
+
+//#endif
+
+#endif
+
 
 struct layer_struct
 {

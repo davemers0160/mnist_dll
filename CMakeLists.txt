@@ -27,8 +27,13 @@ PROJECT(mnist_lib)
     set(LIB_NAME "mnist_lib")
 
     # Change these to point to the right location for a particular machine
-    set(DLIB_ROOT "D:/dlib-19.17/")
-    set(COMMON_ROOT "D:/Common")
+    if(WIN32)
+        set(DLIB_ROOT "D:/dlib-19.17/")
+        set(COMMON_ROOT "D:/Common")
+    else()
+        set(DLIB_ROOT "~/dlib-19.17/")
+        set(COMMON_ROOT "~/Projects/Common")
+    endif()    
 
 
     message("Building DLL ...")
