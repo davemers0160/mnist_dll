@@ -31,7 +31,7 @@ PROJECT(mnist_lib)
         set(DLIB_ROOT "D:/dlib-19.17/")
         set(COMMON_ROOT "D:/Common")
     else()
-        set(DLIB_ROOT "~/dlib-19.17/")
+        set(DLIB_ROOT "~/dlib-19.18/")
         set(COMMON_ROOT "~/Projects/Common")
     endif()    
 
