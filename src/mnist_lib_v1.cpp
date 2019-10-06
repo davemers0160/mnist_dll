@@ -5,7 +5,7 @@
 #include <vector>
 
 // Custom includes
-#include "mnist_dll.h"
+#include "mnist_lib.h"
 #include "mnist_net_pso_14.h"
 
 // dlib includes
