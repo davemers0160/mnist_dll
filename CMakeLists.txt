@@ -26,14 +26,13 @@ set(LIB_NAME "mnist_lib")
 
 message("Building DLL ...")
 
-
-
 if(WIN32)
     # Change these to point to the right location for a particular machine
     set(DLIB_ROOT "D:/dlib-19.17")
     set(COMMON_ROOT "D:/Common")
     add_definitions(-DMNIST_DLL_EXPORTS)
-    include(${DLIB_ROOT}/dlib/cmake)
+    #include(${DLIB_ROOT}/dlib/cmake)	
+	add_subdirectory(${DLIB_ROOT}/dlib dlib_build)
     
 else()
     # Change these to point to the right location for a particular machine
@@ -75,7 +74,6 @@ message("--------------------------------------------------------")
 message(" ")
 
 
-
 if(WIN32)
     include_directories(${project_includes})
     add_library(${LIB_NAME} SHARED ${SOURCES})
@@ -90,6 +88,7 @@ else()
     #add_compile_options(-fPIC)
     add_definitions("-fPIC")
 endif()
+
 
 #GENERATE_EXPORT_HEADER(${PROJECT_NAME}
 #    BASE_NAME ${PROJECT_NAME}
