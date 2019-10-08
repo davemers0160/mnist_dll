@@ -31,20 +31,20 @@ if(WIN32)
     set(DLIB_ROOT "D:/dlib-19.17")
     set(COMMON_ROOT "D:/Common")
     add_definitions(-DMNIST_DLL_EXPORTS)
-    #include(${DLIB_ROOT}/dlib/cmake)	
 	add_subdirectory(${DLIB_ROOT}/dlib dlib_build)
     
-else()
+elseif(UNIX)
     # Change these to point to the right location for a particular machine
-    set(DLIB_ROOT "~/dlib-19.18")
-    set(COMMON_ROOT "~/Projects/Common")
-
+    set(HOME "$ENV{HOME}" CACHE INTERNAL "Copied from environment variable")
+    set(DLIB_ROOT "${HOME}/dlib-19.18")
+    set(COMMON_ROOT "${HOME}/Projects/Common")
+    add_subdirectory(${DLIB_ROOT}/dlib dlib_build)
+    
+elseif(APPLE)
+    message(FATAL_ERROR "Apple -> Not Even!")
+    
 endif()    
 
-#include (GenerateExportHeader)
-
-#message("dlib root: " ${DLIB_ROOT})
-#message("${DLIB_ROOT}/dlib/all/*.cpp")
 
 # get the source files for the Library
 file(GLOB SOURCES "src/*.cpp")
@@ -54,6 +54,7 @@ set(project_includes "include"
                     "${COMMON_ROOT}/include" 
                     ${DLIB_ROOT}
                     )
+                    
 
 message(" ")
 message("--------------------------------------------------------")
@@ -78,24 +79,17 @@ if(WIN32)
     include_directories(${project_includes})
     add_library(${LIB_NAME} SHARED ${SOURCES})
     set_target_properties(${LIB_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-else()
+elseif(UNIX)
     find_package(X11 REQUIRED)
     include_directories(${project_includes})
     add_library(${LIB_NAME} SHARED ${SOURCES})
     set_target_properties(${LIB_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-    target_link_libraries(${LIB_NAME} "${DLIB_ROOT}/dlib/build/libdlib.so" ${X11_LIBRARIES})
+    #target_link_libraries(${LIB_NAME} "${DLIB_ROOT}/dlib/build/libdlib.so" ${X11_LIBRARIES})
+    target_link_libraries(${LIB_NAME} ${X11_LIBRARIES})
     #target_link_libraries(${LIB_NAME} dlib::dlib)
-    #add_compile_options(-fPIC)
-    add_definitions("-fPIC")
+    #add_definitions("-fPIC")
 endif()
 
-
-#GENERATE_EXPORT_HEADER(${PROJECT_NAME}
-#    BASE_NAME ${PROJECT_NAME}
-#    EXPORT_MACRO_NAME ${PROJECT_NAME_EXPORT}
-#    EXPORT_FILE_NAME ${LIB_NAME}_Export.h
-#    STATIC_DEFINE PROJECT_NAME_BUILT_AS_STATIC
-#    )
 
 set(default_build_type "Release")
 if(MSVC AND (${CMAKE_VERSION} VERSION_GREATER "3.6.0"))
