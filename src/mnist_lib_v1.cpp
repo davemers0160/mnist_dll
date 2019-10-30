@@ -30,11 +30,12 @@ void init_net(const char *net_name)
 }
 
 //----------------------------------------------------------------------------------
-//uint64_t run_net(std::vector<uint8_t> &input)
-unsigned int run_net(unsigned char* input, unsigned int nr, unsigned int nc)
+//unsigned int run_net(unsigned char* input, unsigned int nr, unsigned int nc)
+void run_net(unsigned char* input, unsigned int nr, unsigned int nc, unsigned int *res)
 {
     dlib::matrix<uint8_t> ti = dlib::pointer_to_matrix(input, nr, nc); //dlib::reshape(dlib::mat(std::vector<uint8_t>(input, input+length), 28, 28);
-    return net(ti);
+    //return net(ti);
+    *res = net(ti);
 }
 
 //----------------------------------------------------------------------------------
