@@ -1,12 +1,10 @@
-#ifndef MNIST_DLL_H
-#define MNIST_DLL_H
-
-//#define EXTERN_C
-//#include <cstdint>
-//#include <string>
-//#include <vector>
+#ifndef MNIST_LIB_H
+#define MNIST_LIB_H
 
 #if defined(_WIN32) | defined(__WIN32__) | defined(__WIN32) | defined(_WIN64) | defined(__WIN64)
+
+#if defined(BUILD_LIB)
+
 #ifdef MNIST_DLL_EXPORTS
 #define MNIST_DLL_API __declspec(dllexport)
 #else
@@ -14,11 +12,14 @@
 #endif
 
 #else
-#define MNIST_DLL_API
-//#ifdef MNIST_DLL_API
-//#undef MNIST_DLL_API
 
-//#endif
+#define MNIST_DLL_API
+
+#endif
+
+#else
+
+#define MNIST_DLL_API
 
 #endif
 
@@ -46,7 +47,6 @@ extern "C" {
 #endif
 // This function will take an grayscale image in std::vector<uint8_t> row major order
 // as an input and produce a resulting classification of the image.  The input must be 28*28
-    //MNIST_DLL_API unsigned int run_net(unsigned char* input, unsigned int nr, unsigned int nc);
     MNIST_DLL_API void run_net(unsigned char* input, unsigned int nr, unsigned int nc, unsigned int *res);
 #ifdef __cplusplus
 }
@@ -107,4 +107,4 @@ extern "C" {
 }
 #endif
 
-#endif  // MNIST_DLL_H
+#endif  // MNIST_LIB_H
