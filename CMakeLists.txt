@@ -31,6 +31,7 @@ if("${PLATFORM}" STREQUAL "")
 endif()
 message("Platform: " ${PLATFORM})
 
+# Build Options
 option(USE_AVX_INSTRUCTIONS  "Compile your program with AVX instructions"  ON)
 option(BUILD_LIB  "Build the project into a library (.dll/.so) vs a standalone executable"  ON)
 
@@ -52,38 +53,43 @@ if(WIN32)
         set(COMMON_ROOT "D:/Common")
         set(DLIB_ROOT "D:/dlib-19.19")
         set(DLIB_CONTRIB "D:/Projects/dlib-contrib")
-    endif() 
+    endif()
+    include(${DLIB_ROOT}/dlib/cmake)
     
 else()
+    set(HOME "$ENV{HOME}" CACHE INTERNAL "Copied from environment variable")
+    
     if(${PLATFORM} STREQUAL "HPC")
-        set(COMMON_ROOT "~/Projects/Common")
-        set(DLIB_ROOT "~/dlib-19.19")
-        set(DLIB_CONTRIB "~/Projects/dlib-contrib")
+        set(COMMON_ROOT "${HOME}/Projects/Common")
+        set(DLIB_ROOT "${HOME}/dlib-19.19")
+        set(DLIB_CONTRIB "${HOME}/Projects/dlib-contrib")
     elseif(${PLATFORM} STREQUAL "MainGear")
-        set(COMMON_ROOT "~/Projects/Common")
-        set(DLIB_ROOT "~/dlib-19.18")
-        set(DLIB_CONTRIB "~/Projects/dlib-contrib")
+        set(COMMON_ROOT "${HOME}/Projects/Common")
+        set(DLIB_ROOT "${HOME}/dlib-19.18")
+        set(DLIB_CONTRIB "${HOME}/Projects/dlib-contrib")
     else()
-        set(COMMON_ROOT "~/Projects/Common")
-        set(DLIB_ROOT "~/dlib-19.19")
-        set(DLIB_CONTRIB "~/Projects/dlib-contrib")
+        set(COMMON_ROOT "${HOME}/Projects/Common")
+        set(DLIB_ROOT "${HOME}/dlib-19.19")
+        set(DLIB_CONTRIB "${HOME}/Projects/dlib-contrib")
     endif()
+    add_subdirectory(${DLIB_ROOT}/dlib dlib_build)
     
 endif()
 
 
-include(${DLIB_ROOT}/dlib/cmake)
-
 # get the source files for the Library
 file(GLOB SOURCES "src/*.cpp")
-#set(SOURCES ${SOURCES} "${DLIB_ROOT}/dlib/all/source.cpp")
 
 set(project_includes "include" 
     "${COMMON_ROOT}/include" 
     "${DLIB_CONTRIB}/include" 
-    #${DLIB_ROOT}
     )
-                    
+
+if(BUILD_LIB AND UNIX)
+    set(SOURCES ${SOURCES} "${DLIB_ROOT}/dlib/all/source.cpp")
+    set(project_includes ${project_includes} ${DLIB_ROOT})
+endif()
+     
 
 message(" ")
 message("--------------------------------------------------------")
@@ -105,14 +111,13 @@ message(" ")
 
 include_directories(${project_includes})
 
-
-
 if(BUILD_LIB)
     message("Building MNIST Library...")
     
     add_definitions(-DBUILD_LIB)
 
     if(WIN32)
+
         add_definitions(-DMNIST_DLL_EXPORTS)
         #add_subdirectory(${DLIB_ROOT}/dlib dlib_build)
         
@@ -127,18 +132,16 @@ if(BUILD_LIB)
         endif() 
     
     elseif(UNIX)
+                
         # Change these to point to the right location for a particular machine
-        #set(HOME "$ENV{HOME}" CACHE INTERNAL "Copied from environment variable")
-        #add_subdirectory(${DLIB_ROOT}/dlib dlib_build)
+        #add_definitions("-fPIC")
         
-        #find_package(X11 REQUIRED)
+        find_package(X11 REQUIRED)
         add_library(${LIB_NAME} SHARED ${SOURCES})
         set_target_properties(${LIB_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-        #target_link_libraries(${LIB_NAME} "${DLIB_ROOT}/dlib/build/libdlib.so" ${X11_LIBRARIES})
-        #target_link_libraries(${LIB_NAME} ${X11_LIBRARIES})
+        target_link_libraries(${LIB_NAME} ${X11_LIBRARIES})
         #target_link_libraries(${LIB_NAME} dlib::dlib ${X11_LIBRARIES})
-        target_link_libraries(${LIB_NAME} dlib::dlib)
-        #add_definitions("-fPIC")        
+        #target_link_libraries(${LIB_NAME} dlib::dlib)
         
     elseif(APPLE)
         message(FATAL_ERROR "Apple -> Not Even!")
