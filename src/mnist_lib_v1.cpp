@@ -156,6 +156,7 @@ int main(int argc, char** argv)
     std::cout << std::endl << "Program complete.  Press Enter to close." << std::endl;
     std::cin.ignore();
     return 0;
-}
+
+}   // end of main
 
 #endif  // BUILD_LIB

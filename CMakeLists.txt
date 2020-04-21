@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-#  Root CMake file for DfD Graph Cuts
+#  Root CMake file for the MNIST Dgigit Classification Library
 # ----------------------------------------------------------------------------
 #
 # To perform an out of source build do the following on the command line:
